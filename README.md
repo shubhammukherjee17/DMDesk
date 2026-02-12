@@ -65,8 +65,8 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd micro-saas
+   git clone https://github.com/shubhammukherjee17/DMDesk.git
+   cd DMDesk
    ```
 
 2. **Install dependencies**
