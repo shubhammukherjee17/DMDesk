@@ -18,12 +18,15 @@ import { Badge } from "@/components/ui/badge"
 import { getDashboardStats, getRecentSales } from "@/lib/services/stats-service"
 import { formatCurrency } from "@/lib/utils"
 
+import { redirect } from "next/navigation"
+
 export default async function Dashboard() {
     const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const { data: { user }, error } = await supabase.auth.getUser()
 
-    if (!user) {
-        return <div className="p-4">Please log in to view the dashboard.</div>
+    if (error || !user) {
+        console.error("Dashboard auth check failed:", error)
+        redirect("/login")
     }
 
     const stats = await getDashboardStats(supabase)
