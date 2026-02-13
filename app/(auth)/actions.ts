@@ -21,8 +21,10 @@ export async function login(formData: FormData) {
         return { error: error.message }
     }
 
+    const returnTo = formData.get('return_to') as string || '/dashboard'
+
     revalidatePath('/', 'layout')
-    redirect('/dashboard')
+    redirect(returnTo)
 }
 
 export async function signup(formData: FormData) {
@@ -65,7 +67,8 @@ export async function signup(formData: FormData) {
     }
 
     revalidatePath('/', 'layout')
-    redirect('/dashboard')
+    const returnTo = formData.get('return_to') as string || '/dashboard'
+    redirect(returnTo)
 }
 
 export async function logout() {

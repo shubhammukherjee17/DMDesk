@@ -174,6 +174,38 @@ export interface Database {
                     created_at?: string
                 }
             }
+            subscription_payments: {
+                Row: {
+                    id: string
+                    user_id: string
+                    order_id: string
+                    payment_id: string | null
+                    amount: number
+                    status: string | null
+                    plan_type: string
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    user_id: string
+                    order_id: string
+                    payment_id?: string | null
+                    amount: number
+                    status?: string | null
+                    plan_type: string
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    user_id?: string
+                    order_id?: string
+                    payment_id?: string | null
+                    amount?: number
+                    status?: string | null
+                    plan_type?: string
+                    created_at?: string
+                }
+            }
         }
     }
 }

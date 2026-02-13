@@ -9,7 +9,11 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
-export default function LoginPage() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function LoginPage(props: any) {
+    const searchParams = props.searchParams || {};
+    const returnTo = searchParams.return_to;
+
     const [error, setError] = useState<string | null>(null)
     const [isPending, startTransition] = useTransition()
 
@@ -32,6 +36,7 @@ export default function LoginPage() {
                 </CardDescription>
             </CardHeader>
             <form action={handleSubmit}>
+                <input type="hidden" name="return_to" value={returnTo || ''} />
                 <CardContent className="grid gap-4">
                     {error && (
                         <Alert variant="destructive">
@@ -53,7 +58,7 @@ export default function LoginPage() {
                     </Button>
                     <div className="mt-2 text-center text-sm">
                         Don't have an account?{" "}
-                        <Link href="/signup" className="underline">
+                        <Link href={`/signup?return_to=${encodeURIComponent(returnTo || '/dashboard')}`} className="underline">
                             Sign up
                         </Link>
                     </div>

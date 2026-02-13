@@ -7,8 +7,25 @@ create table public.users (
   email text not null,
   business_name text,
   instagram_handle text,
+  plan text default 'free',
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
+
+-- SUBSCRIPTION PAYMENTS TABLE
+create table public.subscription_payments (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references public.users(id) not null,
+  order_id text not null, -- Paytm Order ID
+  payment_id text, -- Paytm Transaction ID
+  amount decimal(10,2) not null,
+  status text default 'pending',
+  plan_type text not null, -- 'pro' or 'business'
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- RLS for Subscription Payments
+alter table public.subscription_payments enable row level security;
+create policy "Users can view own subscription payments" on public.subscription_payments for select using (auth.uid() = user_id);
 
 -- CUSTOMERS TABLE
 create table public.customers (
@@ -37,6 +54,7 @@ create table public.orders (
   customer_id uuid references public.customers(id),
   status text check (status in ('pending', 'paid', 'shipped', 'delivered', 'cancelled')) default 'pending',
   payment_status text check (payment_status in ('pending', 'paid', 'failed')) default 'pending',
+  payment_id text,
   total_amount decimal(10,2) not null,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );

@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, BarChart3, Package, Users, ShieldCheck, Check, Menu, Twitter, Instagram, Linkedin, Github } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
+import { SubscriptionButton } from "@/components/subscription-button"
+
 
 export default function LandingPage() {
   return (
@@ -164,7 +166,9 @@ export default function LandingPage() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full" variant="outline">Get Started</Button>
+                  <Link href="/signup" className="w-full">
+                    <Button className="w-full" variant="outline">Get Started</Button>
+                  </Link>
                 </CardFooter>
               </Card>
 
@@ -198,7 +202,12 @@ export default function LandingPage() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full">Upgrade to Pro</Button>
+                  <SubscriptionButton
+                    planType="pro"
+                    amount={29}
+                    text="Upgrade to Pro"
+                    className="w-full"
+                  />
                 </CardFooter>
               </Card>
 
@@ -229,7 +238,9 @@ export default function LandingPage() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full" variant="outline">Contact Sales</Button>
+                  <Link href="mailto:sales@dmdesk.com" className="w-full">
+                    <Button className="w-full" variant="outline">Contact Sales</Button>
+                  </Link>
                 </CardFooter>
               </Card>
             </div>
